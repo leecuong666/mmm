@@ -5,9 +5,11 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {useTheme} from '@react-navigation/native';
 
-interface Props {
+interface BtnAnimatedProps {
   style?: StyleProp<ViewStyle>;
+  bgColor?: string;
   isShow?: boolean;
   disable?: boolean;
   onPress?: () => void;
@@ -18,21 +20,25 @@ const PressAnimated = Animated.createAnimatedComponent(Pressable);
 
 const BtnAnimated = ({
   style,
+  bgColor,
   disable = false,
   isShow = true,
   onPress,
   children,
-}: Props) => {
+}: BtnAnimatedProps) => {
   const display = useDerivedValue(
-    () => withTiming(Number(isShow), {duration: 200}),
+    () => withTiming(Number(isShow), {duration: 150}),
     [isShow],
   );
+  const backgroundColor = useDerivedValue(
+    () => withTiming(bgColor!, {duration: 150}),
+    [bgColor],
+  );
 
-  const btnStyle = useAnimatedStyle(() => {
-    return {
-      opacity: display.value,
-    };
-  });
+  const btnStyle = useAnimatedStyle(() => ({
+    opacity: display.value,
+    backgroundColor: backgroundColor.value,
+  }));
 
   return (
     <PressAnimated
@@ -44,4 +50,12 @@ const BtnAnimated = ({
   );
 };
 
-export {BtnAnimated};
+const BtnTheme = (props: BtnAnimatedProps) => {
+  const {
+    colors: {card},
+  } = useTheme();
+
+  return <BtnAnimated {...props} bgColor={card}></BtnAnimated>;
+};
+
+export {BtnAnimated, BtnTheme};

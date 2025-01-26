@@ -1,0 +1,25 @@
+{
+  "screens": {
+    "Introduce": {
+      "body": {
+        "introduceList": [
+          {
+            "title": "Chi tiêu thông minh",
+            "content": "Quản lý tài chính đơn giản và dễ dàng đạt được mục tiêu của bạn."
+          },
+          {
+            "title": "Nhắc nhở công việc",
+            "content": "Không bao giờ bỏ lỡ công việc với thông báo theo thời gian thực."
+          },
+          {
+            "title": "Phân tích chuyên sâu",
+            "content": "Khám phá các thông tin phân tích chi tiết dựa trên dữ liệu."
+          }
+        ]
+      },
+      "footer": {
+        "button": {"back": "Quay lại", "next": "Tiếp theo"}
+      }
+    }
+  }
+}

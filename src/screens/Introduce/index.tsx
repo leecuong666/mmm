@@ -19,32 +19,26 @@ import {RootStackParams} from '../../navigation/types';
 import useAppNavigate from '../../hooks/useAppNavigate';
 import {useAppDispatch} from '../../hooks/reduxHooks';
 import {updateIntroduceState} from '../../redux/appStateSlice';
-
-export type Intro = {img: React.ReactNode; title: string; content: string};
+import useAppLanguage from '../../hooks/useAppLanguage';
+import {CommonLng} from '../../language/type';
 
 const introSize = dimension.width;
 const imgSize = introSize * 0.9;
 
-const introduceData: Intro[] = [
-  {
-    img: <Mmoney width={imgSize} height={imgSize} />,
-    title: 'Smart Spending',
-    content:
-      'Manage your finances effortlessly and achieve your financial goals.',
-  },
-  {
-    img: <Mtime width={imgSize} height={imgSize} />,
-    title: 'Task Reminders',
-    content: 'Never miss a deadline or task with real-time job alerts.',
-  },
-  {
-    img: <Fanalyze width={imgSize} height={imgSize} />,
-    title: 'Insightful Analytics',
-    content: 'Unlock powerful insights and make data-driven decisions.',
-  },
+const introduceData = [
+  <Mmoney width={imgSize} height={imgSize} />,
+  <Mtime width={imgSize} height={imgSize} />,
+  <Fanalyze width={imgSize} height={imgSize} />,
 ];
 
 const Introduce = () => {
+  const {
+    footer: {
+      button: {back, next},
+    },
+    body: {introduceList},
+  } = useAppLanguage<CommonLng>('screens.Introduce');
+
   const introRef = useRef<FlatList>(null);
   const dispatch = useAppDispatch();
   const navigation = useAppNavigate<RootStackParams>();
@@ -62,7 +56,7 @@ const Introduce = () => {
       const nextOffset = offsetTracking / introSize + state;
 
       if (nextOffset > introduceData.length - 1) {
-        dispatch(updateIntroduceState());
+        // dispatch(updateIntroduceState());
         return navigation.navigate('SignIn');
       }
 
@@ -75,13 +69,19 @@ const Introduce = () => {
   );
 
   const renderIntroduce = useCallback(
-    ({item}: {item: Intro}) => <IntroItem {...item} />,
+    ({item, index}: {item: React.ReactNode; index: number}) => (
+      <IntroItem
+        img={item}
+        title={introduceList[index].title}
+        content={introduceList[index].content}
+      />
+    ),
     [],
   );
 
   const renderDots = useCallback(
     ({index}: {index: number}) => (
-      <DotsItem index={index} offset={offsetTracking} stepSize={introSize} />
+      <DotsItem index={index} offset={offsetTracking / introSize} />
     ),
     [offsetTracking],
   );
@@ -94,7 +94,7 @@ const Introduce = () => {
         showsHorizontalScrollIndicator={false}
         pagingEnabled
         data={introduceData}
-        keyExtractor={item => item.title}
+        keyExtractor={(_, index) => index.toString()}
         renderItem={renderIntroduce}
         getItemLayout={(_, index) => ({
           length: introSize,
@@ -110,8 +110,9 @@ const Introduce = () => {
           onPress={() => handleControllIntro(-1)}
           isShow={offsetTracking / introSize > 0}
           disable={offsetTracking / introSize == 0}
-          style={[styles.btnContainer, {backgroundColor: colors.main2}]}>
-          <Text style={styles.btnText}>Back</Text>
+          bgColor={colors.text1}
+          style={styles.btnContainer}>
+          <Text style={styles.btnText}>{back}</Text>
         </BtnAnimated>
 
         <FlatList
@@ -124,8 +125,9 @@ const Introduce = () => {
 
         <BtnAnimated
           onPress={() => handleControllIntro(1)}
-          style={[styles.btnContainer, {backgroundColor: colors.main3}]}>
-          <Text style={styles.btnText}>Next</Text>
+          bgColor={colors.main3}
+          style={styles.btnContainer}>
+          <Text style={styles.btnText}>{next}</Text>
         </BtnAnimated>
       </View>
     </SafeAreaView>
@@ -137,7 +139,6 @@ export default Introduce;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.main1,
   },
 
   footerContainer: {

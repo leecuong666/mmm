@@ -1,11 +1,15 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {dimension} from '../../contants/appInfo';
-import {Intro} from '.';
 import {textStyle} from '../../styles/text';
 import {colors} from '../../contants/color';
+import TextTheme from '../../components/TextTheme';
 
-interface Props extends Intro {}
+interface Props {
+  img: React.ReactNode;
+  title: string;
+  content: string;
+}
 
 const IntroItem = ({img, title, content}: Props) => {
   return (
@@ -13,9 +17,13 @@ const IntroItem = ({img, title, content}: Props) => {
       {img}
 
       <View style={styles.contentContainer}>
-        <Text style={[textStyle.title, {color: colors.text2}]}>{title}</Text>
+        <TextTheme style={[textStyle.title, {color: colors.text1}]}>
+          {title}
+        </TextTheme>
 
-        <Text style={[textStyle.content, {color: '#a9aab3'}]}>{content}</Text>
+        <Text style={[textStyle.content, {color: colors.text2}]}>
+          {content}
+        </Text>
       </View>
     </View>
   );
