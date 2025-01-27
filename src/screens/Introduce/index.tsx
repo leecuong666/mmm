@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Fanalyze, Mmoney, Mtime} from '../../contants/svgs';
 import {dimension} from '../../contants/appInfo';
 import IntroItem from './IntroItem';
@@ -21,6 +21,7 @@ import {useAppDispatch} from '../../hooks/reduxHooks';
 import {updateIntroduceState} from '../../redux/appStateSlice';
 import useAppLanguage from '../../hooks/useAppLanguage';
 import {IntroduceLng} from '../../language/type';
+import notifee from '@notifee/react-native';
 
 const introSize = dimension.width;
 const imgSize = introSize * 0.9;
@@ -41,6 +42,14 @@ const Introduce = () => {
   const dispatch = useAppDispatch();
   const navigation = useAppNavigate<RootStackParams>();
   const [offsetTracking, setOffsetTracking] = useState(0);
+
+  useEffect(() => {
+    requestNotifiPermission();
+  }, []);
+
+  const requestNotifiPermission = async () => {
+    await notifee.requestPermission();
+  };
 
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
