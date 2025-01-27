@@ -8,18 +8,25 @@ import Animated, {
 } from 'react-native-reanimated';
 
 interface Props {
+  activeSecondColor?: boolean;
+  secondColor?: string;
   children: string | number;
   style?: StyleProp<TextStyle>;
 }
 
-const TextTheme = ({style, children}: Props) => {
+const TextTheme = ({
+  secondColor,
+  activeSecondColor = false,
+  style,
+  children,
+}: Props) => {
   const {
     colors: {text},
   } = useTheme();
 
   const textColor = useDerivedValue(
-    () => withTiming(text, {duration: 200}),
-    [text],
+    () => withTiming(activeSecondColor ? secondColor! : text, {duration: 300}),
+    [text, activeSecondColor],
   );
 
   const textStyle = useAnimatedStyle(() => ({

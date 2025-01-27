@@ -1,24 +1,30 @@
 {
   "screens": {
     "Introduce": {
-      "body": {
-        "introduceList": [
-          {
-            "title": "Smart Spending",
-            "content": "Manage your finances effortlessly and achieve your financial goals."
-          },
-          {
-            "title": "Task Reminders",
-            "content": "Never miss a deadline or task with real-time job alerts."
-          },
-          {
-            "title": "Insightful Analytics",
-            "content": "Unlock powerful insights and make data-driven decisions."
-          }
-        ]
-      },
-      "footer": {
-        "button": {"back": "Back", "next": "Next"}
+      "introduceList": [
+        {
+          "title": "Smart Spending",
+          "content": "Manage your finances effortlessly and achieve your financial goals."
+        },
+        {
+          "title": "Task Reminders",
+          "content": "Never miss a deadline or task with real-time job alerts."
+        },
+        {
+          "title": "Insightful Analytics",
+          "content": "Unlock powerful insights and make data-driven decisions."
+        }
+      ],
+      "button": {"back": "Back", "next": "Next"}
+    },
+    "SignIn": {
+      "button": {"signin": "Sign In", "singup": "Sign Up"},
+      "form": {"name": "Name", "email": "Email", "passwrod": "Password"},
+      "privacy": "By SignIn Up, you agree to our Terms & Privacy Policy",
+      "formAlert": {
+        "emailAlert": "Invalid Email!",
+        "passwordAlert": "Password must have as least 6 characters!",
+        "nameAlert": "Invalid Name!"
       }
     }
   }

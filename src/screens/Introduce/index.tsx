@@ -20,7 +20,7 @@ import useAppNavigate from '../../hooks/useAppNavigate';
 import {useAppDispatch} from '../../hooks/reduxHooks';
 import {updateIntroduceState} from '../../redux/appStateSlice';
 import useAppLanguage from '../../hooks/useAppLanguage';
-import {CommonLng} from '../../language/type';
+import {IntroduceLng} from '../../language/type';
 
 const introSize = dimension.width;
 const imgSize = introSize * 0.9;
@@ -33,11 +33,9 @@ const introduceData = [
 
 const Introduce = () => {
   const {
-    footer: {
-      button: {back, next},
-    },
-    body: {introduceList},
-  } = useAppLanguage<CommonLng>('screens.Introduce');
+    button: {back, next},
+    introduceList,
+  } = useAppLanguage<IntroduceLng>('screens.Introduce');
 
   const introRef = useRef<FlatList>(null);
   const dispatch = useAppDispatch();
@@ -56,7 +54,7 @@ const Introduce = () => {
       const nextOffset = offsetTracking / introSize + state;
 
       if (nextOffset > introduceData.length - 1) {
-        // dispatch(updateIntroduceState());
+        dispatch(updateIntroduceState());
         return navigation.navigate('SignIn');
       }
 

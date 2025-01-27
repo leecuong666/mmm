@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@notifee/react-native": "^9.1.8",
     "@os-team/i18next-react-native-language-detector": "^1.1.5",
     "@react-native-community/datetimepicker": "^8.2.0",
     "@react-navigation/bottom-tabs": "^7.2.0",
@@ -19,6 +20,7 @@
     "@shopify/flash-list": "^1.7.2",
     "i18next": "^24.2.2",
     "react": "18.3.1",
+    "react-hook-form": "^7.54.2",
     "react-i18next": "^15.4.0",
     "react-native": "0.76.5",
     "react-native-bootsplash": "^6.3.2",

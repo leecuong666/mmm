@@ -1,4 +1,4 @@
-import {Pressable, StyleProp, ViewStyle} from 'react-native';
+import {Pressable, StyleProp, ViewProps, ViewStyle} from 'react-native';
 import React from 'react';
 import Animated, {
   useAnimatedStyle,
@@ -31,7 +31,7 @@ const BtnAnimated = ({
     [isShow],
   );
   const backgroundColor = useDerivedValue(
-    () => withTiming(bgColor!, {duration: 150}),
+    () => withTiming(bgColor!, {duration: 300}),
     [bgColor],
   );
 

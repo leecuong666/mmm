@@ -18,7 +18,7 @@ const ViewTheme = ({children, style}: Props) => {
   } = useTheme();
 
   const cardColor = useDerivedValue(
-    () => withTiming(card, {duration: 200}),
+    () => withTiming(card, {duration: 300}),
     [card],
   );
 

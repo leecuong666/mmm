@@ -1,7 +1,6 @@
 export type RootStackParams = {
   BottomTabs: undefined;
   SignIn: undefined;
-  SignUp: undefined;
   Introduce: undefined;
 };
 

@@ -1,24 +1,30 @@
 {
   "screens": {
     "Introduce": {
-      "body": {
-        "introduceList": [
-          {
-            "title": "Chi tiêu thông minh",
-            "content": "Quản lý tài chính đơn giản và dễ dàng đạt được mục tiêu của bạn."
-          },
-          {
-            "title": "Nhắc nhở công việc",
-            "content": "Không bao giờ bỏ lỡ công việc với thông báo theo thời gian thực."
-          },
-          {
-            "title": "Phân tích chuyên sâu",
-            "content": "Khám phá các thông tin phân tích chi tiết dựa trên dữ liệu."
-          }
-        ]
-      },
-      "footer": {
-        "button": {"back": "Quay lại", "next": "Tiếp theo"}
+      "introduceList": [
+        {
+          "title": "Chi tiêu thông minh",
+          "content": "Quản lý tài chính đơn giản và dễ dàng đạt được mục tiêu của bạn."
+        },
+        {
+          "title": "Nhắc nhở công việc",
+          "content": "Không bao giờ bỏ lỡ công việc với thông báo theo thời gian thực."
+        },
+        {
+          "title": "Phân tích chuyên sâu",
+          "content": "Khám phá các thông tin phân tích chi tiết dựa trên dữ liệu."
+        }
+      ],
+      "button": {"back": "Quay lại", "next": "Tiếp theo"}
+    },
+    "SignIn": {
+      "button": {"signin": "Đăng nhập", "singup": "Đăng ký"},
+      "form": {"name": "Họ tên", "email": "Email", "passwrod": "Mật khẩu"},
+      "privacy": "Khi đăng nhập, bạn phải đồng ý với Điều khoản & Chính sách bảo mật của chúng tôi",
+      "formAlert": {
+        "emailAlert": "Email không hợp lệ!",
+        "passwordAlert": "Mật khẩu cần ít nhất 8 ký tự!",
+        "nameAlert": "Tên không hợp lệ!"
       }
     }
   }

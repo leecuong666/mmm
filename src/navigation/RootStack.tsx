@@ -3,7 +3,6 @@ import {RootStackParams} from './types';
 import RootBottomTabs from './RootBottomTabs';
 import Introduce from '../screens/Introduce';
 import SignIn from '../screens/SignIn';
-import SignUp from '../screens/SignUp';
 import {useAppSelector} from '../hooks/reduxHooks';
 
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -17,7 +16,6 @@ const RootStack = () => {
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="Introduce" component={Introduce} />
       <Stack.Screen name="SignIn" component={SignIn} />
-      <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="BottomTabs" component={RootBottomTabs} />
     </Stack.Navigator>
   );

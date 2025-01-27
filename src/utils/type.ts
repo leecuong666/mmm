@@ -7,3 +7,7 @@ export type KeyPaths<T> = T extends object
         : never;
     }[keyof T]
   : never;
+
+export const getLabel = <T>(key: keyof T): string => {
+  return String(key);
+};
