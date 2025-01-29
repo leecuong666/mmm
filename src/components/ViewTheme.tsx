@@ -1,32 +1,36 @@
-import {StyleProp, ViewProps} from 'react-native';
-import React from 'react';
+import {StyleProp, ViewStyle} from 'react-native';
+import React, {memo} from 'react';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {useTheme} from '@react-navigation/native';
+import {Theme, useTheme} from '@react-navigation/native';
 
 interface Props {
-  children: React.ReactNode;
-  style?: StyleProp<ViewProps>;
+  displayBg?: boolean;
+  children: (colors: Theme) => React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
-const ViewTheme = ({children, style}: Props) => {
-  const {
-    colors: {card},
-  } = useTheme();
+const ViewTheme = ({displayBg = false, children, style}: Props) => {
+  const theme = useTheme();
 
   const cardColor = useDerivedValue(
-    () => withTiming(card, {duration: 300}),
-    [card],
+    () =>
+      withTiming(displayBg ? theme.colors.card : 'transparent', {
+        duration: 300,
+      }),
+    [theme.colors.card, displayBg],
   );
 
   const cardStyle = useAnimatedStyle(() => ({
     backgroundColor: cardColor.value,
   }));
 
-  return <Animated.View style={[style, cardStyle]}>{children}</Animated.View>;
+  return (
+    <Animated.View style={[style, cardStyle]}>{children(theme)}</Animated.View>
+  );
 };
 
-export default ViewTheme;
+export default memo(ViewTheme);

@@ -1,11 +1,10 @@
-import {Pressable, StyleProp, ViewProps, ViewStyle} from 'react-native';
+import {Pressable, StyleProp, ViewStyle} from 'react-native';
 import React from 'react';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {useTheme} from '@react-navigation/native';
 
 interface BtnAnimatedProps {
   style?: StyleProp<ViewStyle>;
@@ -50,12 +49,4 @@ const BtnAnimated = ({
   );
 };
 
-const BtnTheme = (props: BtnAnimatedProps) => {
-  const {
-    colors: {card},
-  } = useTheme();
-
-  return <BtnAnimated {...props} bgColor={card}></BtnAnimated>;
-};
-
-export {BtnAnimated, BtnTheme};
+export {BtnAnimated};

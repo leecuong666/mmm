@@ -20,6 +20,7 @@ import {useTheme} from '@react-navigation/native';
 interface Props {
   isDisplay?: boolean;
   id: string;
+  textSecure?: boolean;
   isRequire?: boolean;
   length?: {minLength: number | undefined; maxLength?: number | undefined};
   pattern?: ValidationRule<RegExp>;
@@ -43,6 +44,7 @@ export default function InputText({
   id,
   control,
   error,
+  textSecure = false,
   length = {minLength: undefined, maxLength: undefined},
   pattern,
   isRequire = false,
@@ -98,8 +100,10 @@ export default function InputText({
               onChangeText={onChange}
               onBlur={onBlur}
               value={value}
-              style={[inputStyle, {color: text}]}
+              style={[inputStyle, {color: text, flex: 1}]}
               inputMode={inputMode}
+              secureTextEntry={textSecure}
+              autoCapitalize="none"
               placeholderTextColor={placeHolderColor}
             />
           )}
