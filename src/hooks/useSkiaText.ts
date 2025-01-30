@@ -7,11 +7,7 @@ type Props = {
   fontSize: number;
 };
 
-const useSkiaText = ({
-  text,
-  fontFamily = require('../assets/fonts/MazzardM-Regular.otf'),
-  fontSize,
-}: Props) => {
+const useSkiaText = ({text, fontFamily, fontSize}: Props) => {
   const font = useFont(fontFamily, fontSize);
   const textSize = useMemo(() => font?.measureText(text), [font]);
 

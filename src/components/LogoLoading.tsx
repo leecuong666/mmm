@@ -16,10 +16,6 @@ import {colors} from '../contants/color';
 import useSkiaText from '../hooks/useSkiaText';
 import {Loading} from './AppProvider';
 
-interface Props extends Loading {
-  onAnimationEnd?: () => void;
-}
-
 const {width, height} = dimension;
 const pathW = width / 5;
 const pathH = height / 10;
@@ -33,10 +29,14 @@ const LogoLoading = ({
   isVisable = false,
   fontSize = 25,
   text = '',
+  textColor = colors.main1,
+  textFont = require('../assets/fonts/MazzardM-Regular.otf'),
+  duration = 2222,
+  time = -1,
   onAnimationEnd,
-}: Props) => {
+}: Loading) => {
   const progress = useSharedValue(0);
-  const {font, textSize} = useSkiaText({text, fontSize});
+  const {font, textSize} = useSkiaText({text, fontSize, fontFamily: textFont});
 
   useEffect(() => {
     startAnimation();
@@ -47,14 +47,14 @@ const LogoLoading = ({
 
     progress.value = withRepeat(
       withTiming(1, {
-        duration: 2222,
+        duration: duration,
         easing: Easing.inOut(Easing.ease),
       }),
-      -1,
+      time,
       true,
       end => {
-        if (end && onAnimationEnd) {
-          runOnJS(onAnimationEnd)();
+        if (end) {
+          onAnimationEnd && runOnJS(onAnimationEnd)(end);
         }
       },
     );
@@ -83,8 +83,9 @@ const LogoLoading = ({
               x={width / 2 - textSize?.width! / 2}
               y={height / 2 - textSize?.height! / 2 + pathH}
               text={text}
-              color={colors.main1}
+              color={textColor}
               font={font}
+              opacity={progress}
             />
           )}
         </Group>

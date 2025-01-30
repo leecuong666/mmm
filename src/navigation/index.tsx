@@ -6,7 +6,6 @@ import {
 import RootStack from './RootStack';
 import {colors} from '../contants/color';
 import {useAppSelector} from '../hooks/reduxHooks';
-import BootSplash from 'react-native-bootsplash';
 
 const lightTheme: Theme = {
   ...DefaultTheme,
@@ -38,11 +37,7 @@ const RootNavigation = () => {
   const {isDarkMode} = useAppSelector(state => state.appState);
 
   return (
-    <NavigationContainer
-      theme={isDarkMode ? darkTheme : lightTheme}
-      onReady={() => {
-        BootSplash.hide({fade: true});
-      }}>
+    <NavigationContainer theme={isDarkMode ? darkTheme : lightTheme}>
       <RootStack />
     </NavigationContainer>
   );

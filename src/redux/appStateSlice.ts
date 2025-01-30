@@ -1,10 +1,6 @@
 import {Appearance} from 'react-native';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-
-export interface AppState {
-  isShowIntroduce: boolean;
-  isDarkMode: boolean;
-}
+import {AppState} from '../types/appState';
 
 const initialState: AppState = {
   isShowIntroduce: true,

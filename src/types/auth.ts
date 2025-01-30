@@ -8,9 +8,9 @@ export interface SignUpType extends SignInType {
 }
 
 export type UserInfoType = {
-  id: string;
-  email: string;
-  name: string;
-  phone: string;
-  avatar: string;
+  id?: string;
+  email?: string;
+  name?: string;
+  phone?: string;
+  avatar?: string;
 };

@@ -2,6 +2,7 @@ export type RootStackParams = {
   BottomTabs: undefined;
   SignIn: undefined;
   Introduce: undefined;
+  Splash: undefined;
 };
 
 export type RootBottomTabsParams = {

@@ -1,6 +1,7 @@
 import React, {createContext, useState} from 'react';
 import Notification from './Notification';
 import LogoLoading from './LogoLoading';
+import {DataSourceParam} from '@shopify/react-native-skia';
 
 export type NotifiType = 'success' | 'error' | 'warning';
 export type NotifiPos = 'top' | 'bottom';
@@ -9,6 +10,7 @@ export interface Notifi {
   id?: string;
   message: string;
   type: NotifiType;
+  onAnimationEnd?: (isEnd: boolean) => void;
 }
 
 export interface Loading {
@@ -16,6 +18,11 @@ export interface Loading {
   isVisable?: boolean;
   fontSize?: number;
   text?: string;
+  textColor?: string;
+  textFont?: DataSourceParam;
+  duration?: number;
+  time?: number;
+  onAnimationEnd?: (isEnd: boolean) => void;
 }
 
 export interface AppContextProps {
@@ -43,10 +50,6 @@ const AppComProvider = ({children}: {children: React.ReactNode}) => {
     setNotifi({...alert, id: `${Math.random}${Date.now()}`});
   };
 
-  const handleNotifiEnd = () => {
-    setNotifi(null);
-  };
-
   const showLoading = (state: boolean, props: Loading = loadingProps) => {
     setLoadingProps({...props, isVisable: state});
   };
@@ -55,12 +58,9 @@ const AppComProvider = ({children}: {children: React.ReactNode}) => {
     <AppContext.Provider value={{showNotification, showLoading}}>
       {children}
 
-      <Notification {...notifi!} onAnimationEnd={handleNotifiEnd} />
+      <Notification {...notifi!} />
 
-      <LogoLoading
-        {...loadingProps}
-        // onAnimationEnd={handleLoadingEnd}
-      />
+      <LogoLoading {...loadingProps} />
     </AppContext.Provider>
   );
 };

@@ -1,10 +1,10 @@
 import {useContext} from 'react';
 import {AppContext} from '../components/AppProvider';
 
-const useAppNotification = () => {
+const useAppGlobal = () => {
   const context = useContext(AppContext);
 
   return context;
 };
 
-export default useAppNotification;
+export default useAppGlobal;

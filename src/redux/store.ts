@@ -3,6 +3,7 @@ import {reduxStorage} from './initMMKVStorage';
 import {combineReducers} from 'redux';
 import {configureStore} from '@reduxjs/toolkit';
 import appStateReducer from './appStateSlice';
+import authenReducer from './authenticSlice';
 
 const persistConfig = {
   key: 'root',
@@ -11,6 +12,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   appState: appStateReducer,
+  authen: authenReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

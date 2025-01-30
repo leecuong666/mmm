@@ -1,5 +1,5 @@
 import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {Google, Logo} from '../../contants/svgs';
 import {dimension} from '../../contants/appInfo';
 import TextTheme from '../../components/TextTheme';
@@ -24,11 +24,14 @@ import {Eye, EyeOff} from 'lucide-react-native';
 import ViewTheme from '../../components/ViewTheme';
 import {handleSignIn, handleSignUp} from '../../api';
 import {SignInType, SignUpType} from '../../types/auth';
-import LogoLoading from '../../components/LogoLoading';
 import * as Keychain from 'react-native-keychain';
 import {ResponseCommonType} from '../../types/serverResponseForm';
 import HttpStatusCode from '../../api/statusCode';
-import useAppNotification from '../../hooks/useAppNotification';
+import useAppGlobal from '../../hooks/useAppGlobal';
+import useAppNavigate from '../../hooks/useAppNavigate';
+import {RootStackParams} from '../../navigation/types';
+import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
+import {updateUser} from '../../redux/authenticSlice';
 
 const logoSize = dimension.width * 0.2;
 const iconSize = dimension.width * 0.07;
@@ -39,16 +42,18 @@ const exiting = FadeOut.springify().damping(damping).duration(damping);
 const layout = LinearTransition.springify().damping(damping).duration(damping);
 
 const SignIn = () => {
+  const navigation = useAppNavigate<RootStackParams>();
+  const dispatch = useAppDispatch();
+  const {id} = useAppSelector(state => state.authen.user);
+  const {showNotification, showLoading} = useAppGlobal();
+  const [isSignIn, setIsSignIn] = useState(true);
+  const [isShowPassword, setIsShowPassword] = useState(false);
   const {
     button: {signin, singup},
     form: {name, email, passwrod},
     privacy,
     formAlert: {nameAlert, emailAlert, passwordAlert},
   } = useAppLanguage<SignInLng>('screens.SignIn');
-  const {showNotification, showLoading} = useAppNotification();
-  const [isSignIn, setIsSignIn] = useState(true);
-  const [isShowPassword, setIsShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -63,10 +68,17 @@ const SignIn = () => {
     },
   });
 
+  useLayoutEffect(() => {
+    if (id) return homeNavigate();
+  }, []);
+
   useEffect(() => {
     checkAccountExist();
   }, []);
 
+  const homeNavigate = () => {
+    navigation.navigate('BottomTabs');
+  };
   const checkAccountExist = async () => {
     const credential =
       (await Keychain.getGenericPassword()) as Keychain.UserCredentials;
@@ -94,11 +106,26 @@ const SignIn = () => {
         ? handleSignIn(data)
         : handleSignUp(data as SignUpType))) as ResponseCommonType;
 
-      if (res.code === HttpStatusCode.OK) {
-        Keychain.setGenericPassword(data.email, data.password);
+      if (res.code === HttpStatusCode.UNAUTHORIZED) {
+        return showNotification({
+          message: `Incorrect username or password. Please try again.`,
+          type: 'warning',
+        });
       }
+
+      Keychain.setGenericPassword(data.email, data.password);
+      dispatch(updateUser(res.data));
+      showNotification({
+        message: `Welcome ${res.data.name}`,
+        type: 'success',
+      });
+
+      homeNavigate();
     } catch (error) {
-      console.log(error);
+      showNotification({
+        message: `Something went wrong! Try later`,
+        type: 'error',
+      });
     } finally {
       showLoading(false);
     }
@@ -283,7 +310,7 @@ const styles = StyleSheet.create({
   signinBtn: {
     padding: 10,
     borderRadius: '50%',
-    boxShadow: shadow(1, 2),
+    boxShadow: shadow(),
   },
 
   errStyle: {

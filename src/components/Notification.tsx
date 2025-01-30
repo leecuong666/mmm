@@ -11,9 +11,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {Text} from 'react-native-gesture-handler';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {dimension} from '../contants/appInfo';
-import {textStyle} from '../styles/text';
 import {colors} from '../contants/color';
 import {shadow} from '../styles/shadow';
 import {Error, Success, Warning} from '../contants/svgs';
@@ -21,13 +20,9 @@ import {X} from 'lucide-react-native';
 import {fonts} from '../contants/fonts';
 import {BtnAnimated} from './Btn';
 
-interface Props extends Notifi {
-  onAnimationEnd?: () => void;
-}
-
 const iconSize = 35;
 
-const Notification = ({id, message, type, onAnimationEnd}: Props) => {
+const Notification = ({id, message, type, onAnimationEnd}: Notifi) => {
   const {bottom} = useSafeAreaInsets();
   const initOffset = useMemo(() => bottom + 16, []);
 
@@ -48,7 +43,7 @@ const Notification = ({id, message, type, onAnimationEnd}: Props) => {
 
   const endAnimation = () => {
     return withTiming(-10, {duration: 300}, end => {
-      if (end && onAnimationEnd) runOnJS(onAnimationEnd)();
+      if (end) onAnimationEnd && runOnJS(onAnimationEnd)(end);
     });
   };
 
@@ -100,19 +95,22 @@ const styles = StyleSheet.create({
     backgroundColor: colors.main1,
     borderRadius: 30,
     padding: 8,
-    boxShadow: shadow(1, 1),
+    boxShadow: shadow(),
     gap: 10,
   },
 
   alertContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    overflow: 'hidden',
     gap: 10,
   },
 
   message: {
+    flexWrap: 'wrap',
     color: colors.text1,
-    fontSize: dimension.width * 0.04,
+    fontSize: dimension.width * 0.038,
     fontFamily: fonts.regular,
   },
 
