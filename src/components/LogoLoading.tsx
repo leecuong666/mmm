@@ -7,18 +7,17 @@ import Animated, {
   Easing,
   FadeIn,
   FadeOut,
+  runOnJS,
 } from 'react-native-reanimated';
 import {app, dimension} from '../contants/appInfo';
 import {prepare} from '../utils/geometry';
 import {StyleSheet} from 'react-native';
 import {colors} from '../contants/color';
 import useSkiaText from '../hooks/useSkiaText';
+import {Loading} from './AppProvider';
 
-interface Props {
-  bgColor?: string;
-  isVisable: boolean;
-  fontSize?: number;
-  text?: string;
+interface Props extends Loading {
+  onAnimationEnd?: () => void;
 }
 
 const {width, height} = dimension;
@@ -31,9 +30,10 @@ const m = prepare(centerH, centerV, pathW, pathH, app.svgLogo);
 
 const LogoLoading = ({
   bgColor = 'rgba(0,0,0,0.6)',
-  isVisable = true,
+  isVisable = false,
   fontSize = 25,
   text = '',
+  onAnimationEnd,
 }: Props) => {
   const progress = useSharedValue(0);
   const {font, textSize} = useSkiaText({text, fontSize});
@@ -52,6 +52,11 @@ const LogoLoading = ({
       }),
       -1,
       true,
+      end => {
+        if (end && onAnimationEnd) {
+          runOnJS(onAnimationEnd)();
+        }
+      },
     );
   };
 
@@ -73,13 +78,15 @@ const LogoLoading = ({
             strokeCap={'round'}
             strokeJoin={'round'}
           />
-          <Text
-            x={width / 2 - textSize?.width! / 2}
-            y={height / 2 - textSize?.height! / 2 + pathH}
-            text={text}
-            color={colors.main1}
-            font={font}
-          />
+          {text && (
+            <Text
+              x={width / 2 - textSize?.width! / 2}
+              y={height / 2 - textSize?.height! / 2 + pathH}
+              text={text}
+              color={colors.main1}
+              font={font}
+            />
+          )}
         </Group>
       </Canvas>
     </Animated.View>
@@ -89,8 +96,6 @@ const LogoLoading = ({
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 

@@ -28,6 +28,7 @@ import LogoLoading from '../../components/LogoLoading';
 import * as Keychain from 'react-native-keychain';
 import {ResponseCommonType} from '../../types/serverResponseForm';
 import HttpStatusCode from '../../api/statusCode';
+import useAppNotification from '../../hooks/useAppNotification';
 
 const logoSize = dimension.width * 0.2;
 const iconSize = dimension.width * 0.07;
@@ -44,6 +45,7 @@ const SignIn = () => {
     privacy,
     formAlert: {nameAlert, emailAlert, passwordAlert},
   } = useAppLanguage<SignInLng>('screens.SignIn');
+  const {showNotification, showLoading} = useAppNotification();
   const [isSignIn, setIsSignIn] = useState(true);
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -85,7 +87,7 @@ const SignIn = () => {
   };
 
   const onSubmit = async (data: SignInType | SignUpType) => {
-    setIsLoading(true);
+    showLoading(true, {text: 'Checking your account'});
 
     try {
       const res = (await (isSignIn
@@ -98,7 +100,7 @@ const SignIn = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
+      showLoading(false);
     }
   };
 
@@ -205,13 +207,11 @@ const SignIn = () => {
         <Text style={styles.privacyText}>or</Text>
 
         <View style={styles.anotherSigninContainer}>
-          <BtnAnimated style={styles.signinBtn}>
+          <BtnAnimated style={styles.signinBtn} onPress={() => {}}>
             <Google width={iconSize} height={iconSize} />
           </BtnAnimated>
         </View>
       </View>
-
-      <LogoLoading isVisable={isLoading} text="Checking" />
     </SafeAreaView>
   );
 };

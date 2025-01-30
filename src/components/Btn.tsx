@@ -1,17 +1,18 @@
 import {Pressable, StyleProp, ViewStyle} from 'react-native';
-import React from 'react';
+import React, {useCallback} from 'react';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {debounce, throttle} from 'lodash';
 
 interface BtnAnimatedProps {
   style?: StyleProp<ViewStyle>;
   bgColor?: string;
   isShow?: boolean;
   disable?: boolean;
-  onPress?: () => void;
+  onPress: () => void;
   children?: React.ReactNode;
 }
 
@@ -34,6 +35,14 @@ const BtnAnimated = ({
     [bgColor],
   );
 
+  const handlePress = debounce(
+    () => {
+      onPress();
+    },
+    666,
+    {leading: true, trailing: false},
+  );
+
   const btnStyle = useAnimatedStyle(() => ({
     opacity: display.value,
     backgroundColor: backgroundColor.value,
@@ -42,7 +51,7 @@ const BtnAnimated = ({
   return (
     <PressAnimated
       disabled={disable}
-      onPress={onPress}
+      onPress={handlePress}
       style={[style, btnStyle]}>
       {children}
     </PressAnimated>

@@ -13,7 +13,7 @@ const RootStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={isShowIntroduce ? 'Introduce' : 'SignIn'}
-      screenOptions={{headerShown: false}}>
+      screenOptions={{headerShown: false, freezeOnBlur: true}}>
       <Stack.Screen name="Introduce" component={Introduce} />
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="BottomTabs" component={RootBottomTabs} />
