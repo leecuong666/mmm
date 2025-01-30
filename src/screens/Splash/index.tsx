@@ -18,7 +18,7 @@ const Splash = () => {
       text: 'Manager My Money',
       textColor: text,
       textFont: require('../../assets/fonts/MazzardM-SemiBold.otf'),
-      duration: 1500,
+      duration: 1666,
       time: 1,
       onAnimationEnd(isEnd) {
         if (isEnd) {
