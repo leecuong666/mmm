@@ -1,9 +1,9 @@
-import {StyleSheet, View} from 'react-native';
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import useAppGlobal from '../../hooks/useAppGlobal';
 import useAppNavigate from '../../hooks/useAppNavigate';
 import {RootStackParams} from '../../navigation/types';
 import {useTheme} from '@react-navigation/native';
+import {useAppSelector} from '../../hooks/reduxHooks';
 
 const Splash = () => {
   const {showLoading} = useAppGlobal();
@@ -11,6 +11,8 @@ const Splash = () => {
     colors: {background, text},
   } = useTheme();
   const navigation = useAppNavigate<RootStackParams>();
+  const {id} = useAppSelector(state => state.authen.user);
+  const {isShowIntroduce} = useAppSelector(state => state.appState);
 
   useEffect(() => {
     showLoading(true, {
@@ -21,21 +23,18 @@ const Splash = () => {
       duration: 1666,
       time: 1,
       onAnimationEnd(isEnd) {
-        if (isEnd) {
-          showLoading(false);
-          return navigation.navigate('Introduce');
-        }
+        if (isEnd) showLoading(false);
+
+        if (id) return navigation.navigate('BottomTabs');
+
+        if (isShowIntroduce) return navigation.navigate('Introduce');
+
+        return navigation.navigate('SignIn');
       },
     });
   }, []);
 
-  return <View style={styles.container} />;
+  return null;
 };
 
 export default Splash;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

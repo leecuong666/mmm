@@ -47,11 +47,20 @@ const AppComProvider = ({children}: {children: React.ReactNode}) => {
   const [notifi, setNotifi] = useState<Notifi | null>(null);
 
   const showNotification = (alert: Notifi) => {
-    setNotifi({...alert, id: `${Math.random}${Date.now()}`});
+    setNotifi({
+      ...alert,
+      id: `${Math.random}${Date.now()}`,
+      onAnimationEnd(isEnd) {
+        if (isEnd) setNotifi(null);
+      },
+    });
   };
 
   const showLoading = (state: boolean, props: Loading = loadingProps) => {
-    setLoadingProps({...props, isVisable: state});
+    setLoadingProps({
+      ...props,
+      isVisable: state,
+    });
   };
 
   return (

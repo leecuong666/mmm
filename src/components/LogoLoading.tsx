@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {memo, useCallback, useEffect} from 'react';
 import {Canvas, Group, Path, Text} from '@shopify/react-native-skia';
 import Animated, {
   useSharedValue,
@@ -42,12 +42,12 @@ const LogoLoading = ({
     startAnimation();
   }, [isVisable]);
 
-  const startAnimation = () => {
+  const startAnimation = useCallback(() => {
     if (!isVisable) return (progress.value = 0);
 
     progress.value = withRepeat(
       withTiming(1, {
-        duration: duration,
+        duration,
         easing: Easing.inOut(Easing.ease),
       }),
       time,
@@ -58,9 +58,9 @@ const LogoLoading = ({
         }
       },
     );
-  };
+  }, [isVisable]);
 
-  if (!isVisable) return;
+  if (!isVisable) return null;
 
   return (
     <Animated.View
@@ -100,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogoLoading;
+export default memo(LogoLoading);

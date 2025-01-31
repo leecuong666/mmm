@@ -1,4 +1,4 @@
-import {useEffect, useMemo} from 'react';
+import {memo, useEffect, useMemo} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Notifi} from './AppProvider';
 import Animated, {
@@ -41,11 +41,12 @@ const Notification = ({id, message, type, onAnimationEnd}: Notifi) => {
     );
   };
 
-  const endAnimation = () => {
-    return withTiming(-10, {duration: 300}, end => {
-      if (end) onAnimationEnd && runOnJS(onAnimationEnd)(end);
+  const endAnimation = () =>
+    withTiming(-10, {duration: 300}, finished => {
+      if (finished && onAnimationEnd) {
+        runOnJS(onAnimationEnd)(finished);
+      }
     });
-  };
 
   const handleClose = () => {
     offset.value = endAnimation();
@@ -56,7 +57,7 @@ const Notification = ({id, message, type, onAnimationEnd}: Notifi) => {
     opacity: interpolate(offset.value, [-10, initOffset], [0, 1]),
   }));
 
-  if (!id) return;
+  if (!id) return null;
 
   return (
     <Animated.View style={[styles.notifiContainer, notifiStyle]}>
@@ -82,7 +83,7 @@ const Notification = ({id, message, type, onAnimationEnd}: Notifi) => {
   );
 };
 
-export default Notification;
+export default memo(Notification);
 
 const styles = StyleSheet.create({
   notifiContainer: {

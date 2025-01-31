@@ -1,5 +1,5 @@
 import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Google, Logo} from '../../contants/svgs';
 import {dimension} from '../../contants/appInfo';
 import TextTheme from '../../components/TextTheme';
@@ -30,7 +30,7 @@ import HttpStatusCode from '../../api/statusCode';
 import useAppGlobal from '../../hooks/useAppGlobal';
 import useAppNavigate from '../../hooks/useAppNavigate';
 import {RootStackParams} from '../../navigation/types';
-import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
+import {useAppDispatch} from '../../hooks/reduxHooks';
 import {updateUser} from '../../redux/authenticSlice';
 
 const logoSize = dimension.width * 0.2;
@@ -44,7 +44,6 @@ const layout = LinearTransition.springify().damping(damping).duration(damping);
 const SignIn = () => {
   const navigation = useAppNavigate<RootStackParams>();
   const dispatch = useAppDispatch();
-  const {id} = useAppSelector(state => state.authen.user);
   const {showNotification, showLoading} = useAppGlobal();
   const [isSignIn, setIsSignIn] = useState(true);
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -68,17 +67,10 @@ const SignIn = () => {
     },
   });
 
-  useLayoutEffect(() => {
-    if (id) return homeNavigate();
-  }, []);
-
   useEffect(() => {
     checkAccountExist();
   }, []);
 
-  const homeNavigate = () => {
-    navigation.navigate('BottomTabs');
-  };
   const checkAccountExist = async () => {
     const credential =
       (await Keychain.getGenericPassword()) as Keychain.UserCredentials;
@@ -120,7 +112,7 @@ const SignIn = () => {
         type: 'success',
       });
 
-      homeNavigate();
+      navigation.navigate('BottomTabs');
     } catch (error) {
       showNotification({
         message: `Something went wrong! Try later`,

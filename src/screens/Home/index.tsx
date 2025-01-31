@@ -1,11 +1,11 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
 
 const Home = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>Home</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 

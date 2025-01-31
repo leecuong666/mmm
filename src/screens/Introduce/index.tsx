@@ -7,13 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Fanalyze, Mmoney, Mtime} from '../../contants/svgs';
 import {dimension} from '../../contants/appInfo';
 import IntroItem from './IntroItem';
@@ -23,7 +17,7 @@ import {textStyle} from '../../styles/text';
 import DotsItem from './DotsItem';
 import {RootStackParams} from '../../navigation/types';
 import useAppNavigate from '../../hooks/useAppNavigate';
-import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
+import {useAppDispatch} from '../../hooks/reduxHooks';
 import {updateIntroduceState} from '../../redux/appStateSlice';
 import useAppLanguage from '../../hooks/useAppLanguage';
 import {IntroduceLng} from '../../language/type';
@@ -46,21 +40,12 @@ const Introduce = () => {
 
   const introRef = useRef<FlatList>(null);
   const dispatch = useAppDispatch();
-  const {isShowIntroduce} = useAppSelector(state => state.appState);
   const navigation = useAppNavigate<RootStackParams>();
   const [offsetTracking, setOffsetTracking] = useState(0);
-
-  useLayoutEffect(() => {
-    if (!isShowIntroduce) return signNavigate();
-  }, []);
 
   useEffect(() => {
     requestNotifiPermission();
   }, []);
-
-  const signNavigate = () => {
-    navigation.navigate('SignIn');
-  };
 
   const requestNotifiPermission = async () => {
     await notifee.requestPermission();
@@ -79,7 +64,7 @@ const Introduce = () => {
 
       if (nextOffset > introduceData.length - 1) {
         dispatch(updateIntroduceState());
-        return signNavigate();
+        return navigation.navigate('SignIn');
       }
 
       introRef?.current?.scrollToIndex({
