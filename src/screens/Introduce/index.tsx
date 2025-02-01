@@ -17,11 +17,10 @@ import {textStyle} from '../../styles/text';
 import DotsItem from './DotsItem';
 import {RootStackParams} from '../../navigation/types';
 import useAppNavigate from '../../hooks/useAppNavigate';
-import {useAppDispatch} from '../../hooks/reduxHooks';
-import {updateIntroduceState} from '../../redux/appStateSlice';
 import useAppLanguage from '../../hooks/useAppLanguage';
 import {IntroduceLng} from '../../language/type';
 import notifee from '@notifee/react-native';
+import useAppStore from '../../zustand/appStore';
 
 const introSize = dimension.width;
 const imgSize = introSize * 0.9;
@@ -39,7 +38,7 @@ const Introduce = () => {
   } = useAppLanguage<IntroduceLng>('screens.Introduce');
 
   const introRef = useRef<FlatList>(null);
-  const dispatch = useAppDispatch();
+  const {updateIntroduceState} = useAppStore();
   const navigation = useAppNavigate<RootStackParams>();
   const [offsetTracking, setOffsetTracking] = useState(0);
 
@@ -63,7 +62,7 @@ const Introduce = () => {
       const nextOffset = offsetTracking / introSize + state;
 
       if (nextOffset > introduceData.length - 1) {
-        dispatch(updateIntroduceState());
+        updateIntroduceState();
         return navigation.navigate('SignIn');
       }
 

@@ -16,7 +16,6 @@
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/native-stack": "^7.2.0",
-    "@reduxjs/toolkit": "^2.5.0",
     "@shopify/flash-list": "^1.7.2",
     "@shopify/react-native-skia": "^1.10.2",
     "i18next": "^24.2.2",
@@ -36,9 +35,7 @@
     "react-native-screens": "^4.5.0",
     "react-native-svg": "^15.11.1",
     "react-native-svg-transformer": "^1.5.0",
-    "react-redux": "^9.2.0",
-    "redux": "^5.0.1",
-    "redux-persist": "^6.0.0"
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

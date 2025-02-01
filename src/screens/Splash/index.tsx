@@ -3,7 +3,8 @@ import useAppGlobal from '../../hooks/useAppGlobal';
 import useAppNavigate from '../../hooks/useAppNavigate';
 import {RootStackParams} from '../../navigation/types';
 import {useTheme} from '@react-navigation/native';
-import {useAppSelector} from '../../hooks/reduxHooks';
+import useAuthenStore from '../../zustand/authenStore';
+import useAppStore from '../../zustand/appStore';
 
 const Splash = () => {
   const {showLoading} = useAppGlobal();
@@ -11,8 +12,8 @@ const Splash = () => {
     colors: {background, text},
   } = useTheme();
   const navigation = useAppNavigate<RootStackParams>();
-  const {id} = useAppSelector(state => state.authen.user);
-  const {isShowIntroduce} = useAppSelector(state => state.appState);
+  const {isShowIntroduce} = useAppStore();
+  const id = useAuthenStore(state => state.user?.id);
 
   useEffect(() => {
     showLoading(true, {

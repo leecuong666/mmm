@@ -30,8 +30,7 @@ import HttpStatusCode from '../../api/statusCode';
 import useAppGlobal from '../../hooks/useAppGlobal';
 import useAppNavigate from '../../hooks/useAppNavigate';
 import {RootStackParams} from '../../navigation/types';
-import {useAppDispatch} from '../../hooks/reduxHooks';
-import {updateUser} from '../../redux/authenticSlice';
+import useAuthenStore from '../../zustand/authenStore';
 
 const logoSize = dimension.width * 0.2;
 const iconSize = dimension.width * 0.07;
@@ -43,7 +42,7 @@ const layout = LinearTransition.springify().damping(damping).duration(damping);
 
 const SignIn = () => {
   const navigation = useAppNavigate<RootStackParams>();
-  const dispatch = useAppDispatch();
+  const {initUser} = useAuthenStore();
   const {showNotification, showLoading} = useAppGlobal();
   const [isSignIn, setIsSignIn] = useState(true);
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -106,7 +105,7 @@ const SignIn = () => {
       }
 
       Keychain.setGenericPassword(data.email, data.password);
-      dispatch(updateUser(res.data));
+      initUser(res.data);
       showNotification({
         message: `Welcome ${res.data.name}`,
         type: 'success',

@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native';
 import RootStack from './RootStack';
 import {colors} from '../contants/color';
-import {useAppSelector} from '../hooks/reduxHooks';
+import useAppStore from '../zustand/appStore';
 
 const lightTheme: Theme = {
   ...DefaultTheme,
@@ -34,7 +34,7 @@ const darkTheme: Theme = {
 };
 
 const RootNavigation = () => {
-  const {isDarkMode} = useAppSelector(state => state.appState);
+  const {isDarkMode} = useAppStore();
 
   return (
     <NavigationContainer theme={isDarkMode ? darkTheme : lightTheme}>
