@@ -3,7 +3,7 @@ import React from 'react';
 import {dimension} from '../../contants/appInfo';
 import {textStyle} from '../../styles/text';
 import {colors} from '../../contants/color';
-import TextTheme from '../../components/TextTheme';
+import TextTheme from '../../components/Core/TextTheme';
 
 interface Props {
   img: React.ReactNode;

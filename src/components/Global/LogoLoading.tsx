@@ -1,20 +1,19 @@
 import React, {memo, useCallback, useEffect} from 'react';
 import {Canvas, Group, Path, Text} from '@shopify/react-native-skia';
-import Animated, {
+import {
   useSharedValue,
   withRepeat,
   withTiming,
   Easing,
-  FadeIn,
-  FadeOut,
   runOnJS,
 } from 'react-native-reanimated';
-import {app, dimension} from '../contants/appInfo';
-import {prepare} from '../utils/geometry';
+import {app, dimension} from '../../contants/appInfo';
+import {prepare} from '../../utils/geometry';
 import {StyleSheet} from 'react-native';
-import {colors} from '../contants/color';
-import useSkiaText from '../hooks/useSkiaText';
+import {colors} from '../../contants/color';
+import useSkiaText from '../../hooks/useSkiaText';
 import {Loading} from './AppProvider';
+import Backdrop from '../Core/Backdrop';
 
 const {width, height} = dimension;
 const pathW = width / 5;
@@ -25,12 +24,12 @@ const centerV = height / 2 - pathH / 2;
 const m = prepare(centerH, centerV, pathW, pathH, app.svgLogo);
 
 const LogoLoading = ({
-  bgColor = 'rgba(0,0,0,0.6)',
+  bgColor = colors.backdrop,
   isVisable = false,
   fontSize = 25,
   text = '',
   textColor = colors.main1,
-  textFont = require('../assets/fonts/MazzardM-Regular.otf'),
+  textFont = require('../../assets/fonts/MazzardM-Regular.otf'),
   duration = 2222,
   time = -1,
   onAnimationEnd,
@@ -63,11 +62,8 @@ const LogoLoading = ({
   if (!isVisable) return null;
 
   return (
-    <Animated.View
-      entering={FadeIn.duration(800)}
-      exiting={FadeOut.duration(800)}
-      style={styles.container}>
-      <Canvas style={[styles.container, {backgroundColor: bgColor}]}>
+    <Backdrop display bgColor={bgColor}>
+      <Canvas style={StyleSheet.absoluteFillObject}>
         <Group>
           <Path
             path={m.path!}
@@ -90,14 +86,8 @@ const LogoLoading = ({
           )}
         </Group>
       </Canvas>
-    </Animated.View>
+    </Backdrop>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-  },
-});
 
 export default memo(LogoLoading);

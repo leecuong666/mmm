@@ -1,11 +1,11 @@
 import {Pressable, StyleProp, ViewStyle} from 'react-native';
-import React, {useCallback} from 'react';
+import React from 'react';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {debounce, throttle} from 'lodash';
+import {debounce} from 'lodash';
 
 interface BtnAnimatedProps {
   style?: StyleProp<ViewStyle>;

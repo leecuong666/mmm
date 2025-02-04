@@ -12,13 +12,13 @@ import Animated, {
 } from 'react-native-reanimated';
 import {Text} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
-import {dimension} from '../contants/appInfo';
-import {colors} from '../contants/color';
-import {shadow} from '../styles/shadow';
-import {Error, Success, Warning} from '../contants/svgs';
+import {dimension} from '../../contants/appInfo';
+import {colors} from '../../contants/color';
+import {shadow} from '../../styles/shadow';
+import {Error, Success, Warning} from '../../contants/svgs';
 import {X} from 'lucide-react-native';
-import {fonts} from '../contants/fonts';
-import {BtnAnimated} from './Btn';
+import {fonts} from '../../contants/fonts';
+import {BtnAnimated} from '../Core/Btn';
 
 const iconSize = 35;
 

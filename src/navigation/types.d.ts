@@ -7,6 +7,7 @@ export type RootStackParams = {
 
 export type RootBottomTabsParams = {
   Home: undefined;
+  Notifcation: undefined;
 };
 
 export type RootDrawerParams = {};

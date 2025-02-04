@@ -12,7 +12,7 @@ import {Fanalyze, Mmoney, Mtime} from '../../contants/svgs';
 import {dimension} from '../../contants/appInfo';
 import IntroItem from './IntroItem';
 import {colors} from '../../contants/color';
-import {BtnAnimated} from '../../components/Btn';
+import {BtnAnimated} from '../../components/Core/Btn';
 import {textStyle} from '../../styles/text';
 import DotsItem from './DotsItem';
 import {RootStackParams} from '../../navigation/types';
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: dimension.pH,
+    paddingBottom: 10,
   },
 
   btnContainer: {

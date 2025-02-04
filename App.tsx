@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import {I18nextProvider} from 'react-i18next';
 import i18next from './src/language';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import AppComProvider from './src/components/AppProvider';
+import AppComProvider from './src/components/Global/AppProvider';
 import {enableFreeze} from 'react-native-screens';
 
 enableFreeze(true);

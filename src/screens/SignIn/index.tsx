@@ -2,16 +2,16 @@ import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Google, Logo} from '../../contants/svgs';
 import {dimension} from '../../contants/appInfo';
-import TextTheme from '../../components/TextTheme';
+import TextTheme from '../../components/Core/TextTheme';
 import {colors} from '../../contants/color';
 import {textStyle} from '../../styles/text';
 import {viewStyle} from '../../styles/view';
 import useAppLanguage from '../../hooks/useAppLanguage';
 import {SignInLng} from '../../language/type';
 import {useForm} from 'react-hook-form';
-import {BtnAnimated} from '../../components/Btn';
+import {BtnAnimated} from '../../components/Core/Btn';
 import {fonts} from '../../contants/fonts';
-import InputText from '../../components/InputText';
+import InputText from '../../components/Core/InputText';
 import {getLabel} from '../../utils/type';
 import {shadow} from '../../styles/shadow';
 import Animated, {
@@ -21,7 +21,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {emailReg} from '../../contants/regex';
 import {Eye, EyeOff} from 'lucide-react-native';
-import ViewTheme from '../../components/ViewTheme';
+import ViewTheme from '../../components/Core/ViewTheme';
 import {handleSignIn, handleSignUp} from '../../api';
 import {SignInType, SignUpType} from '../../types/auth';
 import * as Keychain from 'react-native-keychain';

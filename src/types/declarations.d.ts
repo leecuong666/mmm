@@ -4,3 +4,11 @@ declare module '*.svg' {
   const content: React.FC<SvgProps>;
   export default content;
 }
+
+declare module 'i18next' {
+  interface CustomTypeOptions {
+    resources: {
+      common: typeof en;
+    };
+  }
+}

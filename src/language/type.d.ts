@@ -18,11 +18,3 @@ export type SignInLng = {
     nameAlert: string;
   };
 };
-
-declare module 'i18next' {
-  interface CustomTypeOptions {
-    resources: {
-      common: typeof en;
-    };
-  }
-}

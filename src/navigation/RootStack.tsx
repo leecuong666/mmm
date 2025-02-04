@@ -15,6 +15,7 @@ const RootStack = () => {
         headerShown: false,
         freezeOnBlur: true,
         animation: 'fade',
+        gestureEnabled: false,
       }}>
       <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen name="Introduce" component={Introduce} />
