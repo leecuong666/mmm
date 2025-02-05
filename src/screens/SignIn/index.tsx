@@ -128,14 +128,14 @@ const SignIn = () => {
         style={[viewStyle.view, {width: '82%', gap: dimension.width * 0.07}]}>
         <View />
 
-        <Logo width={logoSize} height={logoSize} />
+        <Logo width={logoSize} height={logoSize} fill={colors.darkPrimary} />
 
         <View style={styles.formContainer}>
           <View style={styles.headerContainer}>
             <Pressable disabled={isSignIn} onPress={toggleForm}>
               <TextTheme
                 style={[textStyle.title, {fontSize: dimension.width * 0.08}]}
-                secondColor={colors.text2}
+                secondColor={colors.inactTextGray}
                 activeSecondColor={!isSignIn}>
                 {signin}
               </TextTheme>
@@ -144,7 +144,7 @@ const SignIn = () => {
             <Pressable disabled={!isSignIn} onPress={toggleForm}>
               <TextTheme
                 style={[textStyle.title, {fontSize: dimension.width * 0.08}]}
-                secondColor={colors.text2}
+                secondColor={colors.inactTextGray}
                 activeSecondColor={isSignIn}>
                 {singup}
               </TextTheme>
@@ -214,7 +214,7 @@ const SignIn = () => {
 
           <BtnAnimated
             onPress={handleSubmit(onSubmit)}
-            bgColor={colors.main3}
+            bgColor={colors.darkPrimary}
             style={styles.btnContainer}>
             <Text style={styles.btnText}>{isSignIn ? signin : singup}</Text>
           </BtnAnimated>
@@ -225,7 +225,10 @@ const SignIn = () => {
         <Text style={styles.privacyText}>or</Text>
 
         <View style={styles.anotherSigninContainer}>
-          <BtnAnimated style={styles.signinBtn} onPress={() => {}}>
+          <BtnAnimated
+            bgColor={colors.darkCard}
+            style={styles.signinBtn}
+            onPress={() => {}}>
             <Google width={iconSize} height={iconSize} />
           </BtnAnimated>
         </View>
@@ -280,14 +283,14 @@ const styles = StyleSheet.create({
   btnText: {
     fontFamily: fonts.semiBold,
     fontSize: dimension.width * 0.05,
-    color: colors.main1,
+    color: colors.lightBg,
   },
 
   privacyText: {
     textAlign: 'center',
     fontFamily: fonts.medium,
     fontSize: dimension.width * 0.042,
-    color: colors.text2,
+    color: colors.inactTextGray,
     width: '80%',
     alignSelf: 'center',
   },

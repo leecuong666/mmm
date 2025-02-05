@@ -116,7 +116,7 @@ const Introduce = () => {
           onPress={() => handleControllIntro(-1)}
           isShow={offsetTracking / introSize > 0}
           disable={offsetTracking / introSize == 0}
-          bgColor={colors.text1}
+          bgColor={colors.darkText}
           style={styles.btnContainer}>
           <Text style={styles.btnText}>{back}</Text>
         </BtnAnimated>
@@ -131,7 +131,7 @@ const Introduce = () => {
 
         <BtnAnimated
           onPress={() => handleControllIntro(1)}
-          bgColor={colors.main3}
+          bgColor={colors.darkPrimary}
           style={styles.btnContainer}>
           <Text style={styles.btnText}>{next}</Text>
         </BtnAnimated>
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
 
   btnText: {
     ...textStyle.content,
-    color: colors.main1,
+    color: colors.lightBg,
   },
 
   dotsContainer: {

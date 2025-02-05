@@ -20,17 +20,21 @@ interface Props {
 }
 
 const {tabH} = dimension;
-const iconSize = tabH * 0.45;
+const iconSize = tabH * 0.4;
 
 const Tab = ({isFocus, label, onPress}: Props) => {
   const focus = useDerivedValue(
     () => withTiming(Number(isFocus), {duration: 300}),
     [isFocus],
   );
-  const focusColor = isFocus ? colors.main2 : colors.text4;
+  const focusColor = isFocus ? colors.darkBg : colors.inactTextYellow;
 
   const textStyle = useAnimatedStyle(() => ({
-    color: interpolateColor(focus.value, [0, 1], [colors.text4, colors.main2]),
+    color: interpolateColor(
+      focus.value,
+      [0, 1],
+      [colors.inactTextYellow, colors.darkBg],
+    ),
   }));
 
   return (
@@ -59,6 +63,6 @@ const styles = StyleSheet.create({
 
   label: {
     fontFamily: fonts.medium,
-    fontSize: tabH * 0.22,
+    fontSize: tabH * 0.2,
   },
 });

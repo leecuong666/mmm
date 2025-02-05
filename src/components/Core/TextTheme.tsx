@@ -2,6 +2,7 @@ import {TextStyle, StyleProp} from 'react-native';
 import React from 'react';
 import {useTheme} from '@react-navigation/native';
 import Animated, {
+  AnimatedStyle,
   useAnimatedStyle,
   useDerivedValue,
   withTiming,
@@ -11,7 +12,7 @@ interface Props {
   activeSecondColor?: boolean;
   secondColor?: string;
   children: string | number;
-  style?: StyleProp<TextStyle>;
+  style?: StyleProp<AnimatedStyle<StyleProp<TextStyle>>>;
 }
 
 const TextTheme = ({

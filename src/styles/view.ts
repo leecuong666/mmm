@@ -6,6 +6,12 @@ const viewStyle = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
   },
+
+  header: {
+    paddingTop: 10,
+  },
+
+  footer: {},
 });
 
 export {viewStyle};

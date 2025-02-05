@@ -17,11 +17,11 @@ const IntroItem = ({img, title, content}: Props) => {
       {img}
 
       <View style={styles.contentContainer}>
-        <TextTheme style={[textStyle.title, {color: colors.text1}]}>
+        <TextTheme style={[textStyle.title, {color: colors.darkText}]}>
           {title}
         </TextTheme>
 
-        <Text style={[textStyle.content, {color: colors.text2}]}>
+        <Text style={[textStyle.content, {color: colors.inactTextGray}]}>
           {content}
         </Text>
       </View>

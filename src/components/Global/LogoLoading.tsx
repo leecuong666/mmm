@@ -28,7 +28,7 @@ const LogoLoading = ({
   isVisable = false,
   fontSize = 25,
   text = '',
-  textColor = colors.main1,
+  textColor = colors.lightPrimary,
   textFont = require('../../assets/fonts/MazzardM-Regular.otf'),
   duration = 2222,
   time = -1,
@@ -67,7 +67,7 @@ const LogoLoading = ({
         <Group>
           <Path
             path={m.path!}
-            color={colors.main3}
+            color={colors.darkPrimary}
             end={progress}
             style={'stroke'}
             strokeWidth={pathW * 0.055}

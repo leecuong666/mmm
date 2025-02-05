@@ -20,9 +20,9 @@ import {PressAnimate} from '../Core/Reanimated';
 const {tabCurve, tabW} = dimension;
 
 const logoSize = tabCurve * 0.6;
-const iconSize = logoSize * 0.63;
+const iconSize = logoSize * 0.7;
 const pad = 8;
-const floatingSize = iconSize + pad * 2.5;
+const floatingSize = iconSize + pad * 2.7;
 const centerLogo = (logoSize + pad * 2) / 2 - floatingSize / 2;
 const initPos = {x: centerLogo, y: centerLogo};
 
@@ -57,16 +57,16 @@ const MainTab = ({onNavigate, onMainTabPress}: Props, ref: Ref<MainTabRef>) => {
 
   const handleOpen = () => {
     firstBtn.value = withSpring(
-      {...firstBtn.value, y: -(logoSize * 1.5)},
+      {...firstBtn.value, y: -(logoSize * 1.7)},
       openConfig,
     );
     secondBtn.value = withDelay(
       60,
-      withSpring({x: -(logoSize * 1.3), y: -logoSize / 1.7}, openConfig),
+      withSpring({x: -(logoSize * 1.5), y: -logoSize / 1.4}, openConfig),
     );
     thirdBtn.value = withDelay(
       180,
-      withSpring({x: logoSize * 1.5, y: -logoSize / 1.8}, openConfig),
+      withSpring({x: logoSize * 1.7, y: -logoSize / 1.4}, openConfig),
     );
     isPress.value = withTiming(1, {duration: 500});
   };
@@ -96,7 +96,7 @@ const MainTab = ({onNavigate, onMainTabPress}: Props, ref: Ref<MainTabRef>) => {
     backgroundColor: interpolateColor(
       isPress.value,
       [0, 1],
-      [card, colors.text2],
+      [card, colors.inactTextGray],
     ),
   }));
 
@@ -120,19 +120,19 @@ const MainTab = ({onNavigate, onMainTabPress}: Props, ref: Ref<MainTabRef>) => {
       <PressAnimate
         onPress={onNavigate}
         style={[styles.btnDefault, firtBtnStyle]}>
-        <Bill width={iconSize} height={iconSize} fill={colors.main2} />
+        <Bill width={iconSize} height={iconSize} fill={colors.darkCard} />
       </PressAnimate>
 
       <PressAnimate
         onPress={onNavigate}
         style={[styles.btnDefault, secondBtnStyle]}>
-        <Schedule width={iconSize} height={iconSize} fill={colors.main2} />
+        <Schedule width={iconSize} height={iconSize} fill={colors.darkCard} />
       </PressAnimate>
 
       <PressAnimate
         onPress={onNavigate}
         style={[styles.btnDefault, thirdBtnStyle]}>
-        <ChartNoAxesCombined size={iconSize} stroke={colors.main2} />
+        <ChartNoAxesCombined size={iconSize} stroke={colors.darkCard} />
       </PressAnimate>
 
       <PressAnimate
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
 
   btnDefault: {
     position: 'absolute',
-    backgroundColor: colors.main3,
+    backgroundColor: colors.lightCard,
     alignItems: 'center',
     justifyContent: 'center',
     width: floatingSize,

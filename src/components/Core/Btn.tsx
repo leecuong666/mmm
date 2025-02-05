@@ -1,11 +1,12 @@
-import {Pressable, StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
 import React from 'react';
-import Animated, {
+import {
   useAnimatedStyle,
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
 import {debounce} from 'lodash';
+import {PressAnimate} from './Reanimated';
 
 interface BtnAnimatedProps {
   style?: StyleProp<ViewStyle>;
@@ -15,8 +16,6 @@ interface BtnAnimatedProps {
   onPress: () => void;
   children?: React.ReactNode;
 }
-
-const PressAnimated = Animated.createAnimatedComponent(Pressable);
 
 const BtnAnimated = ({
   style,
@@ -49,12 +48,12 @@ const BtnAnimated = ({
   }));
 
   return (
-    <PressAnimated
+    <PressAnimate
       disabled={disable}
       onPress={handlePress}
       style={[style, btnStyle]}>
       {children}
-    </PressAnimated>
+    </PressAnimate>
   );
 };
 

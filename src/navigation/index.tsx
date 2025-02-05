@@ -11,12 +11,12 @@ const lightTheme: Theme = {
   ...DefaultTheme,
   dark: false,
   colors: {
-    primary: 'rgb(255, 45, 85)',
-    background: colors.main1,
-    card: colors.main2,
-    text: colors.text1,
-    border: colors.main2,
-    notification: 'rgb(255, 69, 58)',
+    primary: colors.lightPrimary,
+    background: colors.lightBg,
+    card: colors.darkCard,
+    text: colors.darkText,
+    border: colors.darkBorder,
+    notification: colors.darkNotifi,
   },
 };
 
@@ -24,12 +24,12 @@ const darkTheme: Theme = {
   ...DefaultTheme,
   dark: true,
   colors: {
-    primary: colors.main1,
-    background: colors.main2,
-    card: colors.main3,
-    text: colors.text3,
-    border: colors.main2,
-    notification: colors.main2,
+    primary: colors.darkPrimary,
+    background: colors.darkBg,
+    card: colors.lightCard,
+    text: colors.lightText,
+    border: colors.lightBorder,
+    notification: colors.lightNotifi,
   },
 };
 

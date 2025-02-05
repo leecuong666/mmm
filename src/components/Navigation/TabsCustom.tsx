@@ -7,11 +7,15 @@ import Tab from './Tab';
 import {RootBottomTabsParams} from '../../navigation/types';
 import {dimension} from '../../contants/appInfo';
 import MainTab, {MainTabRef} from './MainTab';
+import Pointer from './Pointer';
 
 interface Props extends BottomTabBarProps {
   onMainTabPress: (state: number) => void;
   onTabChange: () => void;
 }
+
+const {tabW, tabH} = dimension;
+const spacing = tabW * 0.28;
 
 const TabsCustom = (
   {state, navigation, onMainTabPress, onTabChange}: Props,
@@ -52,6 +56,12 @@ const TabsCustom = (
         );
       })}
 
+      <Pointer
+        index={state.index}
+        space={spacing}
+        amount={state.routes.length}
+      />
+
       <MainTab
         ref={ref}
         onNavigate={handleNavigate}
@@ -66,11 +76,11 @@ export default forwardRef<MainTabRef, Props>(TabsCustom);
 const styles = StyleSheet.create({
   container: {
     ...tabStyles.container,
-    width: '90%',
-    height: dimension.tabH,
+    width: tabW,
+    height: tabH,
     alignSelf: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: dimension.tabW * 0.28,
+    gap: spacing,
   },
 });

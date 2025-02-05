@@ -40,7 +40,7 @@ const TabShape = () => {
           bottom: bottom * 0.5 + 10,
         },
       ]}>
-      <Path fill={colors.main3} d={d} />
+      <Path fill={colors.darkPrimary} d={d} />
     </Svg>
   );
 };

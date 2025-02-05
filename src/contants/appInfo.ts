@@ -3,7 +3,7 @@ import {Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('window');
 
 const tabW = width * 0.9;
-const tabH = height * 0.075;
+const tabH = height * 0.07;
 
 export const dimension = {
   width,
@@ -12,7 +12,7 @@ export const dimension = {
   tabW,
   tabH,
   tabRadius: tabW * 0.05,
-  tabCurve: tabW * 0.2,
+  tabCurve: tabW * 0.16,
 };
 
 export const app = {

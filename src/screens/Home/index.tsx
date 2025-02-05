@@ -1,24 +1,39 @@
-import {
-  FlatList,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import React, {useState} from 'react';
+import {Pressable, SafeAreaView, StyleSheet, View} from 'react-native';
+import React from 'react';
+import TextTheme from '../../components/Core/TextTheme';
+import {viewStyle} from '../../styles/view';
+import useAuthenStore from '../../zustand/authenStore';
+import {textStyle} from '../../styles/text';
+import {fonts} from '../../contants/fonts';
+import {dimension} from '../../contants/appInfo';
+import FastImage from '@d11/react-native-fast-image';
+
+const {width} = dimension;
+
+const avtSize = width * 0.12;
 
 const Home = () => {
+  const {name, avatar} = useAuthenStore(state => state.user)!;
+
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={Array.from({length: 100}).fill('test')}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({index}) => {
-          return <Text>{index}</Text>;
-        }}
-      />
+    <SafeAreaView style={viewStyle.view}>
+      <View style={[styles.headerContainer, viewStyle.header]}>
+        <View style={styles.leftHeaderContainer}>
+          <TextTheme style={textStyle.title}>Welcome</TextTheme>
+          <TextTheme style={styles.userName}>{name!}</TextTheme>
+        </View>
+
+        <Pressable style={styles.avatarContainer}>
+          <FastImage
+            style={styles.avatar}
+            source={{
+              uri: avatar,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.contain}
+          />
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 };
@@ -26,9 +41,28 @@ const Home = () => {
 export default Home;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  headerContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+  },
+
+  leftHeaderContainer: {
+    gap: 2,
+  },
+
+  userName: {
+    fontSize: width * 0.045,
+    fontFamily: fonts.medium,
+  },
+
+  avatarContainer: {
+    borderRadius: '50%',
+    overflow: 'hidden',
+  },
+
+  avatar: {
+    width: avtSize,
+    height: avtSize,
   },
 });

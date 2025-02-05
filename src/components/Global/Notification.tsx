@@ -74,7 +74,7 @@ const Notification = ({id, message, type, onAnimationEnd}: Notifi) => {
       </View>
 
       <BtnAnimated
-        bgColor={colors.main2}
+        bgColor={colors.darkBg}
         onPress={handleClose}
         style={styles.closeBtn}>
         <X color={'white'} size={iconSize * 0.5} />
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: colors.main1,
+    backgroundColor: colors.lightBg,
     borderRadius: 30,
     padding: 8,
     boxShadow: shadow(),
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
 
   message: {
     flexWrap: 'wrap',
-    color: colors.text1,
+    color: colors.darkText,
     fontSize: dimension.width * 0.038,
     fontFamily: fonts.regular,
   },
