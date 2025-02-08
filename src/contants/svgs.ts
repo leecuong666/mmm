@@ -7,19 +7,5 @@ import Success from '../assets/svgs/success.svg';
 import Warning from '../assets/svgs/warning.svg';
 import Error from '../assets/svgs/error.svg';
 import Home from '../assets/svgs/home.svg';
-import Bill from '../assets/svgs/bill.svg';
-import Schedule from '../assets/svgs/schedule.svg';
 
-export {
-  Bill,
-  Schedule,
-  Home,
-  Fanalyze,
-  Mmoney,
-  Mtime,
-  Logo,
-  Google,
-  Success,
-  Warning,
-  Error,
-};
+export {Home, Fanalyze, Mmoney, Mtime, Logo, Google, Success, Warning, Error};

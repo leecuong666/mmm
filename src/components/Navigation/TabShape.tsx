@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react';
-import Svg, {Path} from 'react-native-svg';
 import {colors} from '../../contants/color';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {StyleSheet} from 'react-native';
 import {dimension} from '../../contants/appInfo';
+import {Canvas, Path} from '@shopify/react-native-skia';
 
 const {tabH, tabW, tabRadius, tabCurve} = dimension;
 
@@ -31,17 +31,15 @@ const TabShape = () => {
   }, []);
 
   return (
-    <Svg
-      width={tabW}
-      height={tabH}
+    <Canvas
       style={[
         tabStyles.container,
         {
           bottom: bottom * 0.5 + 10,
         },
       ]}>
-      <Path fill={colors.darkPrimary} d={d} />
-    </Svg>
+      <Path color={colors.darkPrimary} path={d} />
+    </Canvas>
   );
 };
 
@@ -49,6 +47,8 @@ export const tabStyles = StyleSheet.create({
   container: {
     alignSelf: 'center',
     position: 'absolute',
+    width: tabW,
+    height: tabH,
   },
 });
 

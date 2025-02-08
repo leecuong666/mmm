@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import React, {forwardRef, Ref, useImperativeHandle} from 'react';
-import {Bill, Logo, Schedule} from '../../contants/svgs';
+import {Logo} from '../../contants/svgs';
 import {dimension} from '../../contants/appInfo';
 import {useTheme} from '@react-navigation/native';
 import {
@@ -13,7 +13,11 @@ import {
 } from 'react-native-reanimated';
 import {colors} from '../../contants/color';
 import {shadow} from '../../styles/shadow';
-import {ChartNoAxesCombined} from 'lucide-react-native';
+import {
+  ChartNoAxesCombined,
+  ClipboardList,
+  NotepadText,
+} from 'lucide-react-native';
 import {debounce} from 'lodash';
 import {PressAnimate} from '../Core/Reanimated';
 
@@ -120,13 +124,13 @@ const MainTab = ({onNavigate, onMainTabPress}: Props, ref: Ref<MainTabRef>) => {
       <PressAnimate
         onPress={onNavigate}
         style={[styles.btnDefault, firtBtnStyle]}>
-        <Bill width={iconSize} height={iconSize} fill={colors.darkCard} />
+        <NotepadText size={iconSize} stroke={colors.darkCard} />
       </PressAnimate>
 
       <PressAnimate
         onPress={onNavigate}
         style={[styles.btnDefault, secondBtnStyle]}>
-        <Schedule width={iconSize} height={iconSize} fill={colors.darkCard} />
+        <ClipboardList size={iconSize} stroke={colors.darkCard} />
       </PressAnimate>
 
       <PressAnimate

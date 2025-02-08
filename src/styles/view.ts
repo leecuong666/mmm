@@ -12,6 +12,12 @@ const viewStyle = StyleSheet.create({
   },
 
   footer: {},
+
+  viewSymm: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 });
 
 export {viewStyle};

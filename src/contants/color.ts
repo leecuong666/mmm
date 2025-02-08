@@ -3,7 +3,7 @@ export const colors = {
   lightBg: '#ffffff',
   darkBg: '#263045',
   lightText: '#f0f6f8',
-  darkText: '#50555e',
+  darkText: '#717b8e',
   lightPrimary: '#ffffff',
   darkPrimary: '#fec146',
   lightCard: '#ffffff',
