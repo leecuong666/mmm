@@ -16,8 +16,8 @@ import {Loading} from './AppProvider';
 import Backdrop from '../Core/Backdrop';
 
 const {width, height} = dimension;
-const pathW = width / 5;
-const pathH = height / 10;
+const pathW = width / 4;
+const pathH = height / 8;
 const centerH = width / 2 - pathW / 2;
 const centerV = height / 2 - pathH / 2;
 
@@ -70,14 +70,14 @@ const LogoLoading = ({
             color={colors.darkPrimary}
             end={progress}
             style={'stroke'}
-            strokeWidth={pathW * 0.055}
+            strokeWidth={pathW * 0.05}
             strokeCap={'round'}
             strokeJoin={'round'}
           />
           {text && (
             <Text
               x={width / 2 - textSize?.width! / 2}
-              y={height / 2 - textSize?.height! / 2 + pathH}
+              y={height / 2 - textSize?.height! / 2 + pathH * 0.8}
               text={text}
               color={textColor}
               font={font}

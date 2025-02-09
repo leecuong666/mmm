@@ -1,10 +1,22 @@
 import {LayoutChangeEvent} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
-import {Canvas, Path, Skia, Text, useFont} from '@shopify/react-native-skia';
-import {curveBasis, line, scaleLinear, scalePoint} from 'd3';
+import {
+  Canvas,
+  Group,
+  Path,
+  Skia,
+  Text,
+  useFont,
+  Line,
+  vec,
+  LinearGradient,
+} from '@shopify/react-native-skia';
+import {line, scaleLinear, scalePoint, curveMonotoneX} from 'd3';
 import {parse} from 'react-native-redash';
-import {colors} from '../../contants/color';
-import {useSharedValue, withTiming} from 'react-native-reanimated';
+import {colors} from '../../../../contants/color';
+import {useSharedValue, withDelay, withTiming} from 'react-native-reanimated';
+import YAxis from './YAxis';
+import Gradient from './Gradient';
 
 type Props = {
   data: any[];
@@ -21,12 +33,12 @@ const LineChart = ({data, label, value}: Props) => {
   const lineAnimation = useSharedValue(0);
   const [chartSize, setChartSize] = useState<ChartSize>({width: 0, height: 0});
   const font = useFont(
-    require('../../assets/fonts/MazzardM-Medium.otf'),
+    require('../../../../assets/fonts/MazzardM-Medium.otf'),
     chartSize?.width * 0.04,
   );
 
   useEffect(() => {
-    lineAnimation.value = withTiming(1, {duration: 1234});
+    lineAnimation.value = withTiming(1, {duration: 888});
   }, []);
 
   const maxWidthXAxis = Math.max(
@@ -44,7 +56,7 @@ const LineChart = ({data, label, value}: Props) => {
 
   const xDomain = data.map(item => item[label]);
   const xRange = [
-    maxWidthXAxis / 2 + maxWidthYAxis,
+    maxWidthXAxis / 2 + maxWidthYAxis * 1.25,
     chartSize.width - maxWidthXAxis / 2,
   ];
   const xScale = scalePoint().domain(xDomain).range(xRange).padding(0);
@@ -53,18 +65,18 @@ const LineChart = ({data, label, value}: Props) => {
   const minY = Math.min(...data.map(item => item[value]));
 
   const yDomain = [minY, maxY];
-  const yRange = [chartSize.height - maxHeightXAxis, 0];
+  const yRange = [
+    chartSize.height - maxHeightYAxis - maxHeightXAxis,
+    maxHeightXAxis,
+  ];
   const yScale = scaleLinear().domain(yDomain).range(yRange).nice();
   const yTicks = yScale.ticks(5);
 
-  console.log(data);
-  console.log(yTicks);
-
   const curvedLine = line()
-    .x(d => xScale(d[label]))
-    .y(d => yScale(d[value]))
-    .curve(curveBasis)(data);
-  const normalLine = Skia.Path.MakeFromSVGString(curvedLine!);
+    .x(d => xScale(d[label])!)
+    .y(d => yScale(d[value])!)
+    .curve(curveMonotoneX)(data);
+  const singleLine = Skia.Path.MakeFromSVGString(curvedLine!);
 
   const getLayoutSize = useCallback((e: LayoutChangeEvent) => {
     const {width, height} = e.nativeEvent.layout;
@@ -74,16 +86,33 @@ const LineChart = ({data, label, value}: Props) => {
 
   return (
     <Canvas style={{flex: 1}} onLayout={getLayoutSize}>
-      <Path
-        path={normalLine!}
-        style={'stroke'}
-        strokeWidth={3}
-        color={colors.darkPrimary}
-        strokeCap={'round'}
-        start={0}
-        end={lineAnimation}
-      />
+      {/* y axis render */}
+      {yTicks.map((item, index) => {
+        const posItem = yScale(item);
 
+        return (
+          <YAxis
+            key={index}
+            textProps={{
+              x: 0,
+              y: posItem,
+              font: font,
+              text: `${item}`,
+              color: colors.inactTextGray,
+            }}
+            lineProps={{
+              p1: vec(maxWidthYAxis * 1.25, posItem),
+              p2: vec(chartSize.width, posItem),
+              color: colors.inactTextGray,
+              style: 'stroke',
+              strokeWidth: 0.5,
+              opacity: 0.5,
+            }}
+          />
+        );
+      })}
+
+      {/* x axis render */}
       {data.map((item, index) => {
         const title = item[label];
         const textSize = font?.measureText(title);
@@ -92,13 +121,31 @@ const LineChart = ({data, label, value}: Props) => {
           <Text
             key={index}
             x={xScale(title)! - textSize?.width! / 2}
-            y={chartSize.height}
+            y={chartSize.height - textSize?.height! / 2}
             font={font}
             text={title}
             color={colors.inactTextGray}
           />
         );
       })}
+
+      {/* main curved line */}
+      <Path
+        path={singleLine!}
+        style={'stroke'}
+        strokeWidth={3}
+        color={colors.darkPrimary}
+        strokeCap={'round'}
+        start={0}
+        end={lineAnimation}
+      />
+
+      <Gradient
+        chartLine={curvedLine!}
+        width={chartSize.width - maxWidthXAxis / 2}
+        height={chartSize.height - maxHeightXAxis * 2}
+        margin={maxWidthXAxis / 2 + maxWidthYAxis * 1.25}
+      />
     </Canvas>
   );
 };
