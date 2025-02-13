@@ -67,7 +67,6 @@ const LineChart = ({data, label, value}: Props) => {
 
   const minXRange = maxWidthXAxis / 2 + maxWidthYAxis * 1.25;
   const maxXRange = chartSize.width - maxWidthXAxis / 2;
-
   const xScale = scalePoint()
     .domain(data.map(item => item[label]))
     .range([minXRange, maxXRange])
@@ -100,9 +99,9 @@ const LineChart = ({data, label, value}: Props) => {
 
     const clampValue = clamp(e.absoluteX, minXRange, maxXRange);
 
-    const index = Math.floor(clampValue / step) - 1;
+    const index = Math.round(clampValue / step) - 1;
 
-    valueSelected.value = withTiming(data[index][value]);
+    valueSelected.value = withTiming(data[index < 0 ? 0 : index][value]);
 
     const centerY = getYForX(path!, clampValue);
 
@@ -205,7 +204,7 @@ const LineChart = ({data, label, value}: Props) => {
           cy={cy}
           opacity={display}
           width={chartSize.width}
-          height={chartSize.height}
+          height={maxYRange}
         />
       </Canvas>
     </GestureDetector>
