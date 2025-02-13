@@ -14,4 +14,6 @@ export const colors = {
   darkBorder: '#263045',
   inactTextGray: '#a9aab3',
   inactTextYellow: '#a68c4f',
+  completed: '#2fbf71',
+  chartBg: '#3a455a',
 };

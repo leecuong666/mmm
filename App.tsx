@@ -1,6 +1,5 @@
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import RootNavigation from './src/navigation/index';
-import {Provider} from 'react-redux';
 import {I18nextProvider} from 'react-i18next';
 import i18next from './src/language';
 import {SafeAreaProvider} from 'react-native-safe-area-context';

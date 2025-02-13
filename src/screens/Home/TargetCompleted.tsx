@@ -4,10 +4,13 @@ import {textStyle} from '../../styles/text';
 import {colors} from '../../contants/color';
 import {ClipboardList, NotepadText} from 'lucide-react-native';
 import {dimension} from '../../contants/appInfo';
+import CircularChart from '../../components/Core/Chart/Circular/CircularChart';
 
 const {width, height} = dimension;
 
 const iconSize = width * 0.05;
+const chartSize = width * 0.2;
+const stroke = 8;
 
 const TargetCompleted = () => {
   return (
@@ -24,15 +27,13 @@ const TargetCompleted = () => {
           </View>
         </View>
 
-        <View
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: '50%',
-            backgroundColor: 'white',
-            alignSelf: 'center',
-          }}
-        />
+        <View style={styles.chartContainer}>
+          <CircularChart
+            percentage={Math.floor((10 / 12) * 100)}
+            radius={(chartSize - 1) / 2}
+            strokeWidth={stroke}
+          />
+        </View>
       </View>
 
       <View style={styles.taskView}>
@@ -47,15 +48,14 @@ const TargetCompleted = () => {
           </View>
         </View>
 
-        <View
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: '50%',
-            backgroundColor: 'white',
-            alignSelf: 'center',
-          }}
-        />
+        <View style={styles.chartContainer}>
+          <CircularChart
+            percentage={Math.floor((1 / 2) * 100)}
+            radius={(chartSize - 1) / 2}
+            strokeWidth={stroke}
+            mainCircularColor={colors.darkPrimary}
+          />
+        </View>
       </View>
     </View>
   );
@@ -64,6 +64,12 @@ const TargetCompleted = () => {
 export default TargetCompleted;
 
 const styles = StyleSheet.create({
+  overviewContainer: {
+    flexDirection: 'row',
+    gap: width * 0.04,
+    justifyContent: 'space-between',
+  },
+
   taskView: {
     backgroundColor: colors.darkCard,
     padding: width * 0.035,
@@ -101,9 +107,9 @@ const styles = StyleSheet.create({
     fontSize: width * 0.03,
   },
 
-  overviewContainer: {
-    flexDirection: 'row',
-    gap: width * 0.04,
-    justifyContent: 'space-between',
+  chartContainer: {
+    width: chartSize,
+    height: chartSize,
+    alignSelf: 'center',
   },
 });
