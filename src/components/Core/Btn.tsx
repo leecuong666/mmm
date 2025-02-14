@@ -38,7 +38,7 @@ const BtnAnimated = ({
     () => {
       onPress();
     },
-    666,
+    345,
     {leading: true, trailing: false},
   );
 

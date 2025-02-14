@@ -20,7 +20,7 @@ const ySpace = 8;
 const Tooltip = ({text, cx, cy, opacity, width, height}: Props) => {
   const font = useFont(
     require('../../../../assets/fonts/MazzardM-Medium.otf'),
-    20,
+    18,
   );
 
   const textAnimation = useDerivedValue(() => `${Math.round(text.value)}`);

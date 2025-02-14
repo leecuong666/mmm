@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import React from 'react';
 import Animated, {
   interpolateColor,
+  SharedValue,
   useAnimatedStyle,
   useDerivedValue,
   withTiming,
@@ -10,21 +11,19 @@ import {dimension} from '../../contants/appInfo';
 import {useTheme} from '@react-navigation/native';
 
 interface Props {
-  offset: number;
+  offset: SharedValue<number>;
   index: number;
+  itemWidth: number;
 }
 
 const dotSize = dimension.width * 0.025;
 
-const DotsItem = ({offset, index}: Props) => {
+const DotsItem = ({offset, index, itemWidth}: Props) => {
   const {
     colors: {card},
   } = useTheme();
 
-  const highlight = useDerivedValue(
-    () => withTiming(offset, {duration: 100}),
-    [offset],
-  );
+  const highlight = useDerivedValue(() => offset.value / itemWidth);
 
   const dotStyle = useAnimatedStyle(() => ({
     backgroundColor: interpolateColor(
@@ -34,7 +33,7 @@ const DotsItem = ({offset, index}: Props) => {
     ),
   }));
 
-  return <Animated.View style={[styles.container, dotStyle]}></Animated.View>;
+  return <Animated.View style={[styles.container, dotStyle]} />;
 };
 
 export default DotsItem;

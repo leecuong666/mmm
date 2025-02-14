@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Fanalyze, Mmoney, Mtime} from '../../contants/svgs';
 import {dimension} from '../../contants/appInfo';
 import IntroItem from './IntroItem';
@@ -21,6 +21,7 @@ import useAppLanguage from '../../hooks/useAppLanguage';
 import {IntroduceLng} from '../../language/type';
 import notifee from '@notifee/react-native';
 import useAppStore from '../../zustand/appStore';
+import {runOnJS, useSharedValue} from 'react-native-reanimated';
 
 const introSize = dimension.width;
 const imgSize = introSize * 0.9;
@@ -40,7 +41,8 @@ const Introduce = () => {
   const introRef = useRef<FlatList>(null);
   const {updateIntroduceState} = useAppStore();
   const navigation = useAppNavigate<RootStackParams>();
-  const [offsetTracking, setOffsetTracking] = useState(0);
+  const offsetTracking = useSharedValue(0);
+  const [isShowBackBtn, setIsShowBackBtn] = useState(false);
 
   useEffect(() => {
     requestNotifiPermission();
@@ -50,47 +52,26 @@ const Introduce = () => {
     await notifee.requestPermission();
   };
 
-  const handleScroll = useCallback(
-    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-      setOffsetTracking(e.nativeEvent.contentOffset.x);
-    },
-    [],
-  );
+  const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const xOffset = e.nativeEvent.contentOffset.x;
 
-  const handleControllIntro = useCallback(
-    (state: number) => {
-      const nextOffset = offsetTracking / introSize + state;
+    runOnJS(setIsShowBackBtn)(xOffset / introSize > 0);
+    offsetTracking.value = xOffset;
+  };
 
-      if (nextOffset > introduceData.length - 1) {
-        updateIntroduceState();
-        return navigation.navigate('SignIn');
-      }
+  const handleControllIntro = (state: number) => {
+    const nextOffset = offsetTracking.value / introSize + state;
 
-      introRef?.current?.scrollToIndex({
-        index: nextOffset,
-        animated: true,
-      });
-    },
-    [offsetTracking],
-  );
+    if (nextOffset > introduceData.length - 1) {
+      updateIntroduceState();
+      return navigation.navigate('SignIn');
+    }
 
-  const renderIntroduce = useCallback(
-    ({item, index}: {item: React.ReactNode; index: number}) => (
-      <IntroItem
-        img={item}
-        title={introduceList[index].title}
-        content={introduceList[index].content}
-      />
-    ),
-    [],
-  );
-
-  const renderDots = useCallback(
-    ({index}: {index: number}) => (
-      <DotsItem index={index} offset={offsetTracking / introSize} />
-    ),
-    [offsetTracking],
-  );
+    introRef?.current?.scrollToIndex({
+      index: nextOffset,
+      animated: true,
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -101,7 +82,13 @@ const Introduce = () => {
         pagingEnabled
         data={introduceData}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={renderIntroduce}
+        renderItem={({item, index}) => (
+          <IntroItem
+            img={item}
+            title={introduceList[index].title}
+            content={introduceList[index].content}
+          />
+        )}
         getItemLayout={(_, index) => ({
           length: introSize,
           offset: introSize * index,
@@ -114,8 +101,8 @@ const Introduce = () => {
       <View style={styles.footerContainer}>
         <BtnAnimated
           onPress={() => handleControllIntro(-1)}
-          isShow={offsetTracking / introSize > 0}
-          disable={offsetTracking / introSize == 0}
+          isShow={isShowBackBtn}
+          disable={!isShowBackBtn}
           bgColor={colors.darkText}
           style={styles.btnContainer}>
           <Text style={styles.btnText}>{back}</Text>
@@ -124,7 +111,13 @@ const Introduce = () => {
         <FlatList
           data={Array.from({length: introduceData.length}).fill(null)}
           keyExtractor={(_, index) => index.toString()}
-          renderItem={renderDots}
+          renderItem={({index}) => (
+            <DotsItem
+              index={index}
+              offset={offsetTracking}
+              itemWidth={introSize}
+            />
+          )}
           horizontal
           contentContainerStyle={styles.dotsContainer}
         />
