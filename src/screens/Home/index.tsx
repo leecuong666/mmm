@@ -1,4 +1,4 @@
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import TextTheme from '../../components/Core/TextTheme';
 import {viewStyle} from '../../styles/view';
@@ -20,29 +20,31 @@ const Home = () => {
   const {name, avatar} = useAuthenStore(state => state.user)!;
 
   return (
-    <View style={[styles.container, {paddingTop: top}]}>
-      <View style={[viewStyle.viewSymm, viewStyle.header]}>
-        <View style={styles.leftHeaderContainer}>
-          <TextTheme style={textStyle.title}>Welcome</TextTheme>
-          <TextTheme style={styles.userName}>{name!}</TextTheme>
+    <ScrollView style={{flex: 1}}>
+      <View style={[styles.container, {paddingTop: top}]}>
+        <View style={[viewStyle.viewSymm, viewStyle.header]}>
+          <View style={styles.leftHeaderContainer}>
+            <TextTheme style={textStyle.title}>Welcome</TextTheme>
+            <TextTheme style={styles.userName}>{name!}</TextTheme>
+          </View>
+
+          <Pressable style={styles.avatarContainer}>
+            <FastImage
+              style={styles.avatar}
+              source={{
+                uri: avatar,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          </Pressable>
         </View>
 
-        <Pressable style={styles.avatarContainer}>
-          <FastImage
-            style={styles.avatar}
-            source={{
-              uri: avatar,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.contain}
-          />
-        </Pressable>
+        <TargetCompleted />
+
+        <TaskOverview />
       </View>
-
-      <TargetCompleted />
-
-      <TaskOverview />
-    </View>
+    </ScrollView>
   );
 };
 

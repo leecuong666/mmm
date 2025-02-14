@@ -196,7 +196,7 @@ const LineChart = ({data, label, value}: Props) => {
           margin={minXRange}
         />
 
-        <Cursor cx={cx} cy={cy} display={display} />
+        <Cursor cx={cx} cy={cy} display={display} chartHeight={maxYRange} />
 
         <Tooltip
           text={valueSelected}
